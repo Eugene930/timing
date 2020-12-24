@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Example</title>
+  </head>
+  <body>
+    <div id="c"></div>
+    <script type="module">
+      import Timing from "./timing.js";
+      main();
+      function main() {
+        const el = document.getElementById("c");
+        const fn = () => {
+          el.innerHTML = "it's time.";
+          console.log("trigger");
+        };
+
+        const tim = new Timing({
+          jobs: [
+            {
+              name: "test",
+              fn,
+              timeout: new Date(2020, 11, 24, 11, 40, 30),
+              interval: "5 seconds",
+            },
+            {
+              name: "stop",
+              fn: () => {
+                tim.stop("test");
+                console.log("stop");
+              },
+              timeout: new Date(2020, 11, 24, 11, 40, 37),
+            },
+            {
+              name: "run after 4 seconds",
+              fn: () => {
+                console.log("run after 2 seconds and 2 seconds");
+              },
+              timeout: "2 seconds and 2 seconds",
+            },
+            {
+              name: "run after 7 seconds",
+              fn: () => {
+                console.log("run after 5 seconds, 2 seconds");
+              },
+              timeout: "5 seconds, 2 seconds",
+            },
+            {
+              name: "run after 6 seconds",
+              fn: () => {
+                console.log("run after 6 seconds");
+              },
+              timeout: 6000,
+            },
+          ],
+        });
+
+        tim.start();
+      }
+    </script>
+  </body>
+</html>
